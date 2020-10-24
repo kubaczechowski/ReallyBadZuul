@@ -34,7 +34,7 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
+        Room outside, theater, pub, lab, office, cellar;
       
         // create the rooms
         outside = new Room("outside the main entrance of the university");
@@ -44,11 +44,18 @@ public class Game
         office = new Room("in the computing admin office");
         
         // initialise room exits
-        outside.setExits(null, theater, lab, pub);
-        theater.setExits(null, null, null, outside);
-        pub.setExits(null, outside, null, null);
-        lab.setExits(outside, office, null, null);
-        office.setExits(null, null, null, lab);
+       // outside.setExits(null, theater, lab, pub);
+        //theater.setExits(null, null, null, outside);
+        //pub.setExits(null, outside, null, null);
+       // lab.setExits(outside, office, null, null);
+       // office.setExits(null, null, null, lab);
+        lab.setExit("north", outside);
+        lab.setExit("east", office);
+
+        cellar = new Room("in the cellar");
+
+        office.setExit("down", cellar);
+        cellar.setExit("up", office);
 
         currentRoom = outside;  // start game outside
     }
@@ -166,10 +173,12 @@ public class Game
 
     private void printLocationInfo()
     {
-        System.out.println("You are " + currentRoom.getDescription());
-
-        System.out.print("Exits: " +currentRoom.getDescription());
-
+        System.out.println(currentRoom.getLongDescription());
         System.out.println();
+    }
+
+    private void look()
+    {
+        System.out.println(currentRoom.getLongDescription());
     }
 }
