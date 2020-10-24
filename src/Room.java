@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 /**
  * Class Room - a room in an adventure game.
  *
@@ -14,49 +16,72 @@
  */
 public class Room 
 {
-    public String description;
-    public Room northExit;
-    public Room southExit;
-    public Room eastExit;
-    public Room westExit;
+    private String description;
+    //we use hashmap to store exits
+    private HashMap<String, Room> exits;
 
     /**
-     * Create a room described "description". Initially, it has
-     * no exits. "description" is something like "a kitchen" or
-     * "an open court yard".
-     * @param description The room's description.
+     * Create a room described "description "Initially, it
+     * has no exits. "description" is something like "a
+     * kitchen" or "an open courtyard".
      */
-    public Room(String description) 
+    public Room(String description)
     {
         this.description = description;
+        exits = new HashMap<String, Room>();
     }
-
     /**
-     * Define the exits of this room.  Every direction either leads
-     * to another room or is null (no exit there).
-     * @param north The north exit.
-     * @param east The east east.
-     * @param south The south exit.
-     * @param west The west exit.
+     * Define the exits of this room. Every direction either
+     * leads to another room or is null (no exit there).
      */
-    public void setExits(Room north, Room east, Room south, Room west) 
+    public void setExits(Room north, Room east, Room south,
+                         Room west)
     {
         if(north != null)
-            northExit = north;
+            exits.put("north", north);
         if(east != null)
-            eastExit = east;
+            exits.put("east", east);
         if(south != null)
-            southExit = south;
+            exits.put("south", south);
         if(west != null)
-            westExit = west;
+            exits.put("west", west);
     }
-
     /**
-     * @return The description of the room.
+     * Return the room that is reached if we go from this
+     * room in direction "direction "If there is no room in
+     * that direction, return null.
+     */
+    public Room getExit(String direction)
+    {
+        return exits.get(direction);
+    }
+    /**
+     * Return the description of the room (the one that was
+     * defined in the constructor).
      */
     public String getDescription()
     {
         return description;
+    }
+
+    /**
+     * Return a description of the room’s exits,
+     * for example, "Exits: north west".
+     * @return A description of the available exits.
+     */
+    public String getExitString()
+    {
+        //O wrote that method
+        String result = "Exists:";
+        if(northExit==null)
+            result+= " north";
+        if(southExit==null)
+            result+= " south";
+        if(eastExit==null)
+            result+= " east";
+        if(westExit==null)
+            result+= " west";
+        return result;
     }
 
 }
