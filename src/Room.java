@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -21,19 +23,38 @@ public class Room
     //we use hashmap to store exits
     private HashMap<String, Room> exits;
 
+    public void setThereCookie(boolean thereCookie) {
+        isThereCookie = thereCookie;
+    }
+
+    private boolean isThereCookie;
+
+
+    //here we have a list of available items in the room
+    private List<Item> items;
+
+
     /**
      * Create a room described "description "Initially, it
      * has no exits. "description" is something like "a
      * kitchen" or "an open courtyard".
      */
-    public Room(String description)
+    public Room(String description, boolean isThereCookie)
     {
+        items = new ArrayList<>();
         this.description = description;
         exits = new HashMap<String, Room>();
+        this.isThereCookie = isThereCookie;
     }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
 
     public void setExit(String direction, Room neighbor)
     {
+        //I don't understand this line of code
         exits.put(direction, neighbor);
     }
     /**
@@ -61,6 +82,8 @@ public class Room
      */
     public String getExitString()
     { String returnString = "Exits:";
+
+        //I don't understand that line of code
         Set<String> keys = exits.keySet();
         for(String exit : keys) {
             returnString += " " + exit;
@@ -77,6 +100,15 @@ public class Room
     public String getLongDescription()
     {
         return "You are " + description + ".\n" + getExitString();
+    }
+
+    /**
+     * It is needed to create an item for the room
+     * @param item
+     */
+    public void addItem(Item item)
+    {
+        items.add(item);
     }
 
 }
